@@ -1,4 +1,6 @@
 package com.op.status;
 
-public interface StatusRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface StatusRepository extends MongoRepository<Status, String> {
 }
