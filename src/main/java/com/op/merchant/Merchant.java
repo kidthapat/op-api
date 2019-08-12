@@ -8,7 +8,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 public class Merchant {
-
     @Id
     private ObjectId _id;
     @NotEmpty
@@ -20,8 +19,8 @@ public class Merchant {
     @NotEmpty
     private String  email;
 
-    public ObjectId get_id() {
-        return _id;
+    public String get_id() {
+        return _id.toHexString();
     }
 
     public void set_id(ObjectId _id) {
