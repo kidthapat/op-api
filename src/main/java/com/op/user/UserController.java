@@ -15,7 +15,10 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6bbf0fbd787bdc45e81ff219e814f5a2b6e8eb4f
     @Autowired
     private Config config;
 
@@ -24,12 +27,23 @@ public class UserController {
         return userRepository.findAll();
     }
 
+<<<<<<< HEAD
     @PostMapping
     public User create(@RequestBody User user){
         String encodePassword =config.getPasswordEncoder().encode(user.getPassword());
         user.setPassword(encodePassword);
         return userRepository.save(user);
     }
+=======
+//    @PostMapping
+//    public User create(@RequestBody User user){
+//
+//        String encodePassword = config.getPasswordEncoder().encode(user.getPassword());
+//        user.setPassword(encodePassword);
+//
+//        return userRepository.save(user);
+//    }
+>>>>>>> 6bbf0fbd787bdc45e81ff219e814f5a2b6e8eb4f
 
     @PutMapping("/{id}")
     public Optional<User> update(@PathVariable ObjectId id, @RequestBody User user){

@@ -15,7 +15,11 @@ public class Config {
     }
 
     @Bean
+<<<<<<< HEAD
     public PasswordEncoder getPasswordEncoder(){
+=======
+    public PasswordEncoder getPasswordEncoder() {
+>>>>>>> 6bbf0fbd787bdc45e81ff219e814f5a2b6e8eb4f
         return new BCryptPasswordEncoder();
     }
 }
