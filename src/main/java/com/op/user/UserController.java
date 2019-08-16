@@ -15,15 +15,12 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private Config config;
-
     @GetMapping
     public List<User> findAll(){
         return userRepository.findAll();
     }
-
     @PostMapping
     public User create(@RequestBody User user){
         String encodePassword =config.getPasswordEncoder().encode(user.getPassword());
