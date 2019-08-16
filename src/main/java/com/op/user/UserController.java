@@ -1,5 +1,6 @@
 package com.op.user;
 
+import com.op.config.Config;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,10 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private Config config;
 
     @GetMapping
     public List<User> findAll(){
@@ -22,6 +26,8 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody User user){
+        String encodePassword =config.getPasswordEncoder().encode(user.getPassword());
+        user.setPassword(encodePassword);
         return userRepository.save(user);
     }
 
@@ -29,9 +35,9 @@ public class UserController {
     public Optional<User> update(@PathVariable ObjectId id, @RequestBody User user){
         Optional<User> optional = userRepository.findBy_id(id);
         if (optional.isPresent()){
-            User users = optional.get();
-            users.setEmail(user.getEmail());
-            userRepository.save(user);
+            User existedUser = optional.get();
+            existedUser.setEmail(user.getEmail());
+            userRepository.save(existedUser);
         }
         return optional;
     }

@@ -21,7 +21,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/login","/users").permitAll()
                 .anyRequest().authenticated().and().httpBasic();
 
         Filter filter = new CustomAbstractAuthenticationProcessingFilter("/login", authenticationManager());
