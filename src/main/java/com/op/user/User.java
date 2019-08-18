@@ -32,14 +32,17 @@ public class User {
     public User(){}
 
     public User(String email){
+
         this.email = email;
     }
 
     public String get_id() {
+
         return _id.toHexString();
     }
 
     public void set_id(ObjectId id) {
+
         this._id = id;
     }
 
