@@ -19,15 +19,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> optional = repository.findByEmail(email);
-        if (!optional.isPresent()) {
-            throw new UsernameNotFoundException(email);
+        if (optional.isPresent()) {
+            User user = optional.get();
+            UserBuilder builder = withUsername(user.getEmail());
+            builder.password(user.getPassword());
+            builder.authorities("ADMIN");
+
+            return builder.build();
         }
 
-        User user = optional.get();
-        UserBuilder builder = withUsername(user.getEmail());
-        builder.password(user.getPassword());
-        builder.authorities("ADMIN");
-
-        return builder.build();
+        throw new UsernameNotFoundException(email);
     }
 }

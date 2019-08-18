@@ -2,10 +2,10 @@ package com.op.user;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,52 +15,45 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @GetMapping
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public ResponseEntity findAll() {
+        List list = userService.findAll();
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity findByEmail(@PathVariable String email) {
+        Optional<User> optional = userService.findByEmail(email);
+        if (optional.isPresent()) {
+            return new ResponseEntity(optional.get(), HttpStatus.OK);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
-        String encodePassword = getPasswordEncoder().encode(user.getPassword());
-        user.setPassword(encodePassword);
-
-        return userRepository.save(user);
+    public ResponseEntity create(@RequestBody User user) {
+        User createdUser = userService.create(user);
+        return new ResponseEntity(createdUser, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public Optional<User> update(@PathVariable ObjectId id, @RequestBody User user) {
-        Optional<User> optional = userRepository.findBy_id(id);
+    public ResponseEntity update(@PathVariable ObjectId id, @RequestBody User user) {
+        Optional<User> optional = userService.updateById(id, user);
         if (optional.isPresent()) {
-            User existedUser = optional.get();
-            existedUser.setEmail(user.getEmail());
-            userRepository.save(existedUser);
+            return new ResponseEntity(optional.get(), HttpStatus.OK);
         }
-        return optional;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
-//    public boolean delete(@PathVariable ObjectId id){
-//        Optional<User> optional = userRepository.findBy_id(id);
-//        if (optional.isPresent()){
-//            userRepository.delete(optional.get());
-//            return true;
-//        }
-//        return false;
-//    }
-
     @DeleteMapping("/{id}")
-    public List<User> delete(@PathVariable ObjectId id) {
-        Optional<User> optional = userRepository.findBy_id(id);
+    public ResponseEntity delete(@PathVariable ObjectId id) {
+        Optional<User> optional = userService.deleteById(id);
         if (optional.isPresent()) {
-            userRepository.delete(optional.get());
+            return new ResponseEntity(optional.get(), HttpStatus.OK);
         }
-        return findAll();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 }

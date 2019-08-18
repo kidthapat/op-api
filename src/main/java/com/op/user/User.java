@@ -1,13 +1,16 @@
 package com.op.user;
 
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.op.role.Role;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
+@Document(collection = "users")
 public class User {
     @Id
     private ObjectId _id;
@@ -21,28 +24,29 @@ public class User {
     private String password;
 
 //    @NotEmpty
-//    private String first_name;
+//    private String firstName;
+//
 //    @NotEmpty
-//    private String last_name;
+//    private String lastName;
+//
 //    @NotEmpty
-//    private String phone_on;
+//    private String phoneNo;
+//
 //    @NotEmpty
-//    private String role;
+//    private Set<Role> roles;
 
-    public User(){}
+    public User() {
+    }
 
-    public User(String email){
-
+    public User(String email) {
         this.email = email;
     }
 
     public String get_id() {
-
         return _id.toHexString();
     }
 
     public void set_id(ObjectId id) {
-
         this._id = id;
     }
 
@@ -62,35 +66,35 @@ public class User {
         this.password = password;
     }
 
-//    public String getFirst_name() {
-//        return first_name;
+//    public String getFirstName() {
+//        return firstName;
 //    }
 //
-//    public void setFirst_name(String first_name) {
-//        this.first_name = first_name;
+//    public void setFirstName(String firstName) {
+//        this.firstName = firstName;
 //    }
 //
-//    public String getLast_name() {
-//        return last_name;
+//    public String getLastName() {
+//        return lastName;
 //    }
 //
-//    public void setLast_name(String last_name) {
-//        this.last_name = last_name;
+//    public void setLastName(String lastName) {
+//        this.lastName = lastName;
 //    }
 //
-//    public String getPhone_on() {
-//        return phone_on;
+//    public String getPhoneNo() {
+//        return phoneNo;
 //    }
 //
-//    public void setPhone_on(String phone_on) {
-//        this.phone_on = phone_on;
+//    public void setPhoneNo(String phoneNo) {
+//        this.phoneNo = phoneNo;
 //    }
 //
-//    public String getRole() {
-//        return role;
+//    public Set<Role> getRoles() {
+//        return roles;
 //    }
 //
-//    public void setRole(String role) {
-//        this.role = role;
+//    public void setRoles(Set<Role> roles) {
+//        this.roles = roles;
 //    }
 }
