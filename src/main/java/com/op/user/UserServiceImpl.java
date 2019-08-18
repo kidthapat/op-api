@@ -24,13 +24,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         List<User> list = userRepository.findAll();
-        list.forEach(user -> user.setPassword(""));
         return list;
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
         Optional<User> optional = userRepository.findByEmail(email);
+        if(optional.isPresent()) {
+            optional.get().setPassword(null); // secure a password
+        }
         return optional;
     }
 
