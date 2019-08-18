@@ -34,9 +34,9 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login", "/users").permitAll()
                 .anyRequest().authenticated()
-                .and().rememberMe().tokenValiditySeconds(120).key("unique-and-secret")
-                .rememberMeCookieName("remember-me").tokenRepository(getRememberMeTokenService())
-                .rememberMeParameter("remember-me")
+//                .and().rememberMe().tokenValiditySeconds(120).key("unique-and-secret")
+//                .rememberMeCookieName("remember-me").tokenRepository(getRememberMeTokenService())
+//                .rememberMeParameter("remember-me")
                 .and().httpBasic()
                 .and().sessionManagement().maximumSessions(1);
 
