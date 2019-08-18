@@ -23,7 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return userRepository.findAll();
+        List<User> list = userRepository.findAll();
+        list.forEach(user -> user.setPassword(""));
+        return list;
     }
 
     @Override

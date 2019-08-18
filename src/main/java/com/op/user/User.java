@@ -23,15 +23,15 @@ public class User {
     @Length(min = 1, max = 100)
     private String password;
 
-//    @NotEmpty
-//    private String firstName;
-//
-//    @NotEmpty
-//    private String lastName;
-//
-//    @NotEmpty
-//    private String phoneNo;
-//
+    @NotEmpty
+    private String firstName;
+
+    @NotEmpty
+    private String lastName;
+
+    @NotEmpty
+    private String phoneNo;
+
 //    @NotEmpty
 //    private Set<Role> roles;
 
@@ -66,34 +66,34 @@ public class User {
         this.password = password;
     }
 
-//    public String getFirstName() {
-//        return firstName;
-//    }
-//
-//    public void setFirstName(String firstName) {
-//        this.firstName = firstName;
-//    }
-//
-//    public String getLastName() {
-//        return lastName;
-//    }
-//
-//    public void setLastName(String lastName) {
-//        this.lastName = lastName;
-//    }
-//
-//    public String getPhoneNo() {
-//        return phoneNo;
-//    }
-//
-//    public void setPhoneNo(String phoneNo) {
-//        this.phoneNo = phoneNo;
-//    }
-//
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
 //    public Set<Role> getRoles() {
 //        return roles;
 //    }
-//
+
 //    public void setRoles(Set<Role> roles) {
 //        this.roles = roles;
 //    }

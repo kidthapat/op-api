@@ -44,5 +44,4 @@ public class CustomAbstractAuthenticationProcessingFilter extends AbstractAuthen
         SecurityContextHolder.getContext().setAuthentication(authResult);
         response.getOutputStream().print(new ObjectMapper().writeValueAsString(authResult.getPrincipal()));
     }
-
 }

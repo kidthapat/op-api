@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 import javax.servlet.Filter;
 
@@ -26,6 +27,11 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         return new RememberMePersistentTokenRepository();
     }
 
+    @Bean
+    public BasicAuthenticationEntryPoint getBasicAuthenticationEntryPoint() {
+        return new CustomBasicAuthenticationEntryPoint();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -33,7 +39,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().authenticated()
-
+                .and().httpBasic().authenticationEntryPoint(getBasicAuthenticationEntryPoint())
                 .and().sessionManagement().maximumSessions(1);
 
         Filter filter = new CustomAbstractAuthenticationProcessingFilter("/login", authenticationManager());
