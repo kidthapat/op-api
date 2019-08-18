@@ -1,4 +1,4 @@
-package com.op.login;
+package com.op.rememberme;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

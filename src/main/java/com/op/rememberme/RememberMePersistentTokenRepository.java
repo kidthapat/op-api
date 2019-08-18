@@ -1,4 +1,4 @@
-package com.op.login;
+package com.op.rememberme;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;

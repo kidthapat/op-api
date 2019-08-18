@@ -1,6 +1,6 @@
 package com.op.security;
 
-import com.op.login.RememberMePersistentTokenRepository;
+import com.op.rememberme.RememberMePersistentTokenRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

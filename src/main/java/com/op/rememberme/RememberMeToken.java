@@ -1,4 +1,4 @@
-package com.op.login;
+package com.op.rememberme;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
