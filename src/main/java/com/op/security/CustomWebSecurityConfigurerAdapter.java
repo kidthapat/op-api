@@ -17,7 +17,8 @@ import javax.servlet.Filter;
 
 @EnableWebSecurity
 public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-    private String loginPath = Api.v1 + "/login";
+    private String loginUrl = Api.v1 + "/login";
+    private String regiserUserUrl = Api.v1 + "/users";
 
     @Bean
     public UserDetailsService getUserDetailsService() {
@@ -39,12 +40,12 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, loginPath).permitAll()
+                .antMatchers(HttpMethod.POST, loginUrl, regiserUserUrl).permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic().authenticationEntryPoint(getBasicAuthenticationEntryPoint())
                 .and().sessionManagement().maximumSessions(1);
 
-        Filter filter = new CustomAbstractAuthenticationProcessingFilter(loginPath, authenticationManager());
+        Filter filter = new CustomAbstractAuthenticationProcessingFilter(loginUrl, authenticationManager());
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
