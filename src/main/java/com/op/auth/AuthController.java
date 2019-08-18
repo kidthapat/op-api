@@ -1,5 +1,6 @@
 package com.op.auth;
 
+import com.op.constant.Api;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.Authentication;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@RequestMapping("/auth")
+@RequestMapping(Api.v1)
 @RestController
 public class AuthController {
     private Log log = LogFactory.getLog(AuthController.class);

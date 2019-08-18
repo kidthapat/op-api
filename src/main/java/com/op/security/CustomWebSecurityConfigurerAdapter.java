@@ -1,5 +1,6 @@
 package com.op.security;
 
+import com.op.constant.Api;
 import com.op.rememberme.RememberMePersistentTokenRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,7 @@ import javax.servlet.Filter;
 
 @EnableWebSecurity
 public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+    private String loginPath = Api.v1 + "/login";
 
     @Bean
     public UserDetailsService getUserDetailsService() {
@@ -37,12 +39,12 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, loginPath).permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic().authenticationEntryPoint(getBasicAuthenticationEntryPoint())
                 .and().sessionManagement().maximumSessions(1);
 
-        Filter filter = new CustomAbstractAuthenticationProcessingFilter("/login", authenticationManager());
+        Filter filter = new CustomAbstractAuthenticationProcessingFilter(loginPath, authenticationManager());
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
