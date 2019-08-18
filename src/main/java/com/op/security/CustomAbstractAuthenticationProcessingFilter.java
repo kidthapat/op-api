@@ -1,6 +1,7 @@
 package com.op.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.op.login.RememberMeToken;
 import com.op.request.LoginRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,6 +43,8 @@ public class CustomAbstractAuthenticationProcessingFilter extends AbstractAuthen
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         SecurityContextHolder.getContext().setAuthentication(authResult);
+        getRememberMeServices().loginSuccess(request, response, authResult);
         response.getOutputStream().print(new ObjectMapper().writeValueAsString(authResult.getPrincipal()));
     }
+
 }
