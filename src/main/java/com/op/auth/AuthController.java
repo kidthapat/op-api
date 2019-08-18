@@ -26,6 +26,5 @@ public class AuthController {
             log.info("do logout: " + userDetails.getUsername());
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
-        log.info("do logout compleated");
     }
 }
