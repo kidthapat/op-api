@@ -1,4 +1,9 @@
 package com.op.permission;
 
-public class PermissionRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+public interface PermissionRepository extends CrudRepository<Permission, String> {
+    List<Permission> findAll();
 }

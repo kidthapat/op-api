@@ -1,6 +1,5 @@
 package com.op.user;
 
-import com.op.role.Role;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
@@ -32,8 +31,8 @@ public class User {
     @NotEmpty
     private String phoneNo;
 
-//    @NotEmpty
-//    private Set<Role> roles;
+    @NotEmpty
+    private Role role;
 
     public User() {
     }
@@ -90,11 +89,11 @@ public class User {
         this.phoneNo = phoneNo;
     }
 
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
+    public Role getRole() {
+        return role;
+    }
 
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
