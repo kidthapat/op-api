@@ -22,7 +22,7 @@ public class AuthController {
     @PostMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null) {
+        if (authentication != null) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             log.info("do logout: " + userDetails.getUsername());
             new SecurityContextLogoutHandler().logout(request, response, authentication);
