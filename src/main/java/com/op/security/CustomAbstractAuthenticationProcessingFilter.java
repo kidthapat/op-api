@@ -2,11 +2,16 @@ package com.op.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.op.request.LoginRequest;
+import com.op.user.User;
+import com.op.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -16,12 +21,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Optional;
 
 public class CustomAbstractAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
+    private UserService userService;
 
-    protected CustomAbstractAuthenticationProcessingFilter(String url, AuthenticationManager manager) {
+    protected CustomAbstractAuthenticationProcessingFilter(
+            String url,
+            AuthenticationManager manager,
+            ApplicationContext context
+    ) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(manager);
+        this.userService = context.getBean(UserService.class);
     }
 
     @Override
@@ -42,6 +54,13 @@ public class CustomAbstractAuthenticationProcessingFilter extends AbstractAuthen
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         SecurityContextHolder.getContext().setAuthentication(authResult);
-        response.getOutputStream().print(new ObjectMapper().writeValueAsString(authResult.getPrincipal()));
+
+        String email = ((UserDetails) authResult.getPrincipal()).getUsername();
+        Optional<User> optional = userService.findByEmail(email);
+        if (optional.isPresent()) {
+            response.getOutputStream().print(new ObjectMapper().writeValueAsString(optional.get()));
+        } else {
+            response.getOutputStream().print(new ObjectMapper().writeValueAsString(authResult.getPrincipal()));
+        }
     }
 }

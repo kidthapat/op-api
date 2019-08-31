@@ -47,7 +47,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .and().httpBasic().authenticationEntryPoint(getBasicAuthenticationEntryPoint())
                 .and().sessionManagement().maximumSessions(1);
 
-        Filter filter = new CustomAbstractAuthenticationProcessingFilter(loginUrl, authenticationManager());
+        Filter filter = new CustomAbstractAuthenticationProcessingFilter(loginUrl, authenticationManager(), getApplicationContext());
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
