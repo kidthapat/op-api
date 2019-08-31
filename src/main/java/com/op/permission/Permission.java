@@ -1,6 +1,6 @@
 package com.op.permission;
 
-import com.op.user.Role;
+import com.op.role.Role;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

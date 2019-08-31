@@ -1,5 +1,6 @@
 package com.op.user;
 
+import com.op.role.Role;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
@@ -7,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
 
 @Document(collection = "users")
 public class User {

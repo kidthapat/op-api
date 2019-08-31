@@ -1,6 +1,4 @@
-package com.op.user;
-
-import org.springframework.data.annotation.Id;
+package com.op.role;
 
 public class Role {
     private String name;
