@@ -1,49 +1,47 @@
 package com.op.merchant;
 
-import org.bson.types.ObjectId;
+import com.op.constant.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
+@RequestMapping(Api.v1)
 @RestController
-@RequestMapping("/merchant")
 public class MerchantController {
     @Autowired
-    MerchantRepository merchantRepository;
+    private MerchantService merchantService;
 
-    @GetMapping
-    public Merchant create(@RequestBody Merchant merchant){
-
-        return merchantRepository.save(merchant);
+    @PostMapping("/merchants")
+    public ResponseEntity create(@RequestBody Merchant merchant) {
+        Merchant createdMerchant = merchantService.create(merchant);
+        return new ResponseEntity(createdMerchant, HttpStatus.CREATED);
     }
 
-    @PostMapping
-    public List<Merchant> findall(){
-
-        return merchantRepository.findAll();
+    @GetMapping("/merchants")
+    public List<Merchant> findAll() {
+        return merchantService.findAll();
     }
 
-    @PutMapping("/{id}")
-    public Optional<Merchant> update(@PathVariable ObjectId id, @RequestBody Merchant merchant){
-        Optional<Merchant> optional = merchantRepository.findBy_id(id);
-        if (optional.isPresent()){
-            Merchant existedMerchant = optional.get();
-            existedMerchant.setEmail(merchant.getEmail());
-            merchantRepository.save(existedMerchant);
-        }
-        return optional;
-    }
+//    @PutMapping("/merchants/{id}")
+//    public Optional<Merchant> update(@PathVariable ObjectId id, @RequestBody Merchant merchant) {
+//        Optional<Merchant> optional = merchantService.findBy_id(id);
+//        if (optional.isPresent()) {
+//            Merchant existedMerchant = optional.get();
+//            existedMerchant.setEmail(merchant.getEmail());
+//            merchantRepository.save(existedMerchant);
+//        }
+//        return optional;
+//    }
 
-    @DeleteMapping("/{id}")
-    public List<Merchant> delete(@PathVariable ObjectId id){
-        Optional<Merchant> optional = merchantRepository.findBy_id(id);
-        if (optional.isPresent()){
-            merchantRepository.delete(optional.get());
-        }
-        return findall();
-    }
-
+//    @DeleteMapping("/merchants/{id}")
+//    public List<Merchant> delete(@PathVariable ObjectId id) {
+//        Optional<Merchant> optional = merchantRepository.findBy_id(id);
+//        if (optional.isPresent()) {
+//            merchantRepository.delete(optional.get());
+//        }
+//        return findall();
+//    }
 }

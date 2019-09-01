@@ -10,10 +10,13 @@ import javax.validation.constraints.NotEmpty;
 public class Merchant {
     @Id
     private ObjectId _id;
+
     @NotEmpty
     private String  address;
+
     @NotEmpty
-    private String  phone_on;
+    private String  phoneNo;
+
     @Email
     @Length(min = 1, max = 100)
     @NotEmpty
@@ -39,12 +42,12 @@ public class Merchant {
         this.address = address;
     }
 
-    public String getPhone_on() {
-        return phone_on;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
-    public void setPhone_on(String phone_on) {
-        this.phone_on = phone_on;
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     public String getEmail() {
