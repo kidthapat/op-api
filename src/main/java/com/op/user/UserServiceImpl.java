@@ -1,5 +1,6 @@
 package com.op.user;
 
+import com.op.role.Role;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findById(String id) {
+        Optional<User> optional = userRepository.findById(id);
+        if(optional.isPresent()) {
+            optional.get().setPassword(null); // secure a password
+        }
+        return optional;
+    }
+
+    @Override
     public Optional<User> findByEmail(String email) {
         Optional<User> optional = userRepository.findByEmail(email);
         if(optional.isPresent()) {
@@ -45,11 +55,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> updateById(ObjectId id, User user) {
-        Optional<User> optional = userRepository.findBy_id(id);
+    public Optional<User> updateById(String id, User user) {
+        Optional<User> optional = userRepository.findById(id);
         if (optional.isPresent()) {
             User existedUser = optional.get();
+
+            Role role = new Role();
+            role.setName(user.getRole().getName());
+
             existedUser.setEmail(user.getEmail());
+            existedUser.setFirstName(user.getFirstName());
+            existedUser.setLastName(user.getLastName());
+            existedUser.setPhoneNo(user.getPhoneNo());
+            existedUser.setRole(role);
+
             userRepository.save(existedUser);
         }
         return optional;
