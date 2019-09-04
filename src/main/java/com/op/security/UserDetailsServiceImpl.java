@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = optional.get();
         UserBuilder builder = withUsername(user.getEmail());
         builder.password(user.getPassword());
-        builder.authorities(roleService.findPermissionsByRole(user.getRole()).stream().toArray(String[]::new));
+        builder.authorities(roleService.findPermissionsByRole(user.getRole()).stream().map(p -> p.getName()).toArray(String[]::new));
 
         return builder.build();
     }

@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Document("permissions")
@@ -12,6 +13,7 @@ public class Permission {
     @Id
     private ObjectId _id;
 
+    @NotEmpty
     private String name;
 
     private Set<Role> roles;

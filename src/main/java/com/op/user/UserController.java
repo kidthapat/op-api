@@ -1,6 +1,7 @@
 package com.op.user;
 
 import com.op.constant.Api;
+import com.op.role.Role;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
@@ -48,6 +49,12 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity create(@RequestBody User user) {
+        Optional<Role> optional = Optional.ofNullable(user.getRole());
+        if(!optional.isPresent()){
+            Role role = new Role();
+            role.setName("USER");
+            user.setRole(role);
+        }
         User createdUser = userService.create(user);
         return new ResponseEntity(createdUser, HttpStatus.CREATED);
     }

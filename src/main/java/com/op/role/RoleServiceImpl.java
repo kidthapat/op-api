@@ -1,5 +1,6 @@
 package com.op.role;
 
+import com.op.permission.Permission;
 import com.op.permission.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,22 +10,29 @@ import java.util.*;
 @Service
 public class RoleServiceImpl implements RoleService {
     @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
     private PermissionRepository permissionRepository;
 //    @Autowired
 //    private MongoTemplate mongoTemplate;
 
     @Override
-    public List<String> findPermissionsByRole(Role role) {
+    public List<Permission> findPermissionsByRole(Role role) {
         return getAuthoritiesByJava(role);
     }
 
-    private List<String> getAuthoritiesByJava(Role role) {
-        List<String> authorities = new ArrayList<>();
+    @Override
+    public List<Role> findAll() {
+        return roleRepository.findAll();
+    }
+
+    private List<Permission> getAuthoritiesByJava(Role role) {
+        List<Permission> authorities = new ArrayList<>();
         permissionRepository.findAll().forEach(permission -> {
             Set<Role> roles = Optional.ofNullable(permission.getRoles()).orElse(new HashSet<>());
             for (Role r : roles) {
                 if (r.getName().equalsIgnoreCase(role.getName())) {
-                    authorities.add(permission.getName());
+                    authorities.add(permission);
                     break;
                 }
             }
