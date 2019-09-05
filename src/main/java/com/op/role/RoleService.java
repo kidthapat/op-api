@@ -8,4 +8,6 @@ public interface RoleService {
     List<Permission> findPermissionsByRole(Role role);
 
     List<Role> findAll();
+
+    Role create(Role role);
 }

@@ -2,6 +2,7 @@ package com.op.user;
 
 import com.op.constant.Api;
 import com.op.role.Role;
+import com.op.role.RoleService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
@@ -21,7 +22,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/users")
     public ResponseEntity findAll() {
@@ -50,12 +52,12 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity create(@RequestBody User user) {
         Optional<Role> optional = Optional.ofNullable(user.getRole());
-        if(!optional.isPresent()){
-            Role role = new Role();
-            role.setName("USER");
-            user.setRole(role);
+        if (!optional.isPresent()) {
+            Role createdRole = roleService.create(new Role());
+            user.setRole(createdRole);
         }
         User createdUser = userService.create(user);
+        createdUser.setPassword("");
         return new ResponseEntity(createdUser, HttpStatus.CREATED);
     }
 

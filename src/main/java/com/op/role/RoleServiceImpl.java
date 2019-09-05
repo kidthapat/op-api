@@ -26,6 +26,19 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findAll();
     }
 
+    @Override
+    public Role create(Role role) {
+        Optional<String> roleNameOptional = Optional.ofNullable(role.getName());
+        if (!roleNameOptional.isPresent()) {
+            role.setName("USER");
+        }
+        Optional<Role> roleOptional = roleRepository.findByName(role.getName());
+        if(roleOptional.isPresent()) {
+            return roleOptional.get();
+        }
+        return roleRepository.save(role);
+    }
+
     private List<Permission> getAuthoritiesByJava(Role role) {
         List<Permission> authorities = new ArrayList<>();
         permissionRepository.findAll().forEach(permission -> {
