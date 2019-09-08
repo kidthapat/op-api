@@ -32,11 +32,24 @@ public class RoleServiceImpl implements RoleService {
         if (!roleNameOptional.isPresent()) {
             role.setName("USER");
         }
+        role.setName(role.getName().toUpperCase());
         Optional<Role> roleOptional = roleRepository.findByName(role.getName());
         if(roleOptional.isPresent()) {
             return roleOptional.get();
         }
         return roleRepository.save(role);
+    }
+
+    @Override
+    public Optional<Role> updateById(String id, Role role) {
+        Optional<Role> optional = roleRepository.findById(id);
+        if (optional.isPresent()) {
+            Role existedRole = optional.get();
+            existedRole.setName(role.getName().toUpperCase());
+
+            roleRepository.save(existedRole);
+        }
+        return optional;
     }
 
     private List<Permission> getAuthoritiesByJava(Role role) {

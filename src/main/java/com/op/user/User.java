@@ -4,6 +4,7 @@ import com.op.role.Role;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
@@ -32,6 +33,7 @@ public class User {
     private String phoneNo;
 
     @NotEmpty
+    @DBRef
     private Role role;
 
     public User() {

@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping(Api.v1)
 @RestController()
@@ -28,6 +30,15 @@ public class RoleController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @GetMapping("roles/{id}")
+    public ResponseEntity findById(@PathVariable String id) {
+        Optional<Role> optional = roleRepository.findById(id);
+        if (optional.isPresent()) {
+            return new ResponseEntity(optional.get(), HttpStatus.OK);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/roles/{roleName}/permissions")
     public ResponseEntity findPermissionsByRoleName(@PathVariable("roleName") String roleName) {
         Role role = new Role();
@@ -40,7 +51,18 @@ public class RoleController {
     public ResponseEntity create(@RequestBody Role role) {
         LOG.info("Call Create Role Name: " + role.getName());
 
-        Role createRole = roleRepository.save(role);
-        return new ResponseEntity(createRole, HttpStatus.OK);
+        Role createdRole = roleService.create(role);
+        return new ResponseEntity(roleService, HttpStatus.OK);
+    }
+
+    @PutMapping("/roles/{id}")
+    public ResponseEntity update(@PathVariable String id, @RequestBody Role role) {
+        LOG.info("Call Update Role Id: " + role.get_id());
+
+        Optional<Role> optional = roleService.updateById(id, role);
+        if (optional.isPresent()) {
+            return new ResponseEntity(optional.get(), HttpStatus.OK);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 }

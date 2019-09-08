@@ -60,14 +60,10 @@ public class UserServiceImpl implements UserService {
         if (optional.isPresent()) {
             User existedUser = optional.get();
 
-            Role role = new Role();
-            role.setName(user.getRole().getName());
-
             existedUser.setEmail(user.getEmail());
             existedUser.setFirstName(user.getFirstName());
             existedUser.setLastName(user.getLastName());
             existedUser.setPhoneNo(user.getPhoneNo());
-            existedUser.setRole(role);
 
             userRepository.save(existedUser);
         }
