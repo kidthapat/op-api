@@ -17,7 +17,6 @@ public class Permission {
     @NotEmpty
     private String name;
 
-    @DBRef
     private Set<Role> roles;
 
     public String get_id() {

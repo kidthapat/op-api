@@ -16,6 +16,7 @@ public class PermissionServiceImpl implements PermissionService {
         if (optional.isPresent()) {
             Permission existedPermission = optional.get();
             existedPermission.setName(permission.getName());
+            existedPermission.setRoles(permission.getRoles());
 
             permissionRepository.save(existedPermission);
         }
