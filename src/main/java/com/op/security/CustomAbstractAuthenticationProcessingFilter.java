@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.op.request.LoginRequest;
 import com.op.user.User;
 import com.op.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -57,10 +57,13 @@ public class CustomAbstractAuthenticationProcessingFilter extends AbstractAuthen
 
         String email = ((UserDetails) authResult.getPrincipal()).getUsername();
         Optional<User> optional = userService.findByEmail(email);
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter writer = response.getWriter();
         if (optional.isPresent()) {
-            response.getOutputStream().print(new ObjectMapper().writeValueAsString(optional.get()));
+            writer.print(new ObjectMapper().writeValueAsString(optional.get()));
         } else {
-            response.getOutputStream().print(new ObjectMapper().writeValueAsString(authResult.getPrincipal()));
+            writer.print(new ObjectMapper().writeValueAsString(authResult.getPrincipal()));
         }
     }
 }
