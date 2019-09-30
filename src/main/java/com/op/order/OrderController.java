@@ -1,5 +1,6 @@
 package com.op.order;
 
+import com.op.constant.Api;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping(Api.v1)
 @RestController
 public class OrderController {
 
