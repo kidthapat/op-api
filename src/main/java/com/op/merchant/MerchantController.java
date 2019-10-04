@@ -1,16 +1,21 @@
 package com.op.merchant;
 
 import com.op.constant.Api;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping(Api.v1)
 @RestController
 public class MerchantController {
+
+    @Autowired
+    private MerchantRepository merchantRepository;
     @Autowired
     private MerchantService merchantService;
 
@@ -26,8 +31,8 @@ public class MerchantController {
     }
 
 //    @PutMapping("/merchants/{id}")
-//    public Optional<Merchant> update(@PathVariable ObjectId id, @RequestBody Merchant merchant) {
-//        Optional<Merchant> optional = merchantService.findBy_id(id);
+//    public Optional<Merchant> update(@PathVariable String id, @RequestBody Merchant merchant) {
+//        Optional<Merchant> optional = merchantService.findAll(id);
 //        if (optional.isPresent()) {
 //            Merchant existedMerchant = optional.get();
 //            existedMerchant.setEmail(merchant.getEmail());
@@ -36,12 +41,12 @@ public class MerchantController {
 //        return optional;
 //    }
 
-//    @DeleteMapping("/merchants/{id}")
-//    public List<Merchant> delete(@PathVariable ObjectId id) {
-//        Optional<Merchant> optional = merchantRepository.findBy_id(id);
-//        if (optional.isPresent()) {
-//            merchantRepository.delete(optional.get());
-//        }
-//        return findall();
-//    }
+    @DeleteMapping("/merchants/{id}")
+    public List<Merchant> delete(@PathVariable ObjectId id) {
+        Optional<Merchant> optional = merchantRepository.findBy_id(id);
+        if (optional.isPresent()) {
+            merchantRepository.delete(optional.get());
+        }
+        return findAll();
+    }
 }
