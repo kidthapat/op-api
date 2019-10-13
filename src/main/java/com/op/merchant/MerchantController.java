@@ -34,7 +34,7 @@ public class MerchantController {
         return merchantService.findAll();
     }
 
-    @PutMapping("/merchant/{id}")
+    @PutMapping("/merchants/{id}")
     public ResponseEntity updateById(@PathVariable String id, @RequestBody Merchant merchant) {
         LOG.info("Call Update Merchant: " + id);
         Optional<Merchant> optional = merchantService.updateById(id, merchant);
