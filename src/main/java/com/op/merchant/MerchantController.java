@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class MerchantController {
     }
 
     @PutMapping("/merchants/{id}")
-    public ResponseEntity updateById(@PathVariable String id, @RequestBody Merchant merchant) {
+    public ResponseEntity updateById(@PathVariable String id, @Valid @RequestBody Merchant merchant) {
         LOG.info("Call Update Merchant: " + id);
         Optional<Merchant> optional = merchantService.updateById(id, merchant);
         if (optional.isPresent()) {

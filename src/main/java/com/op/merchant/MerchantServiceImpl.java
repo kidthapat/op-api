@@ -32,7 +32,12 @@ public class MerchantServiceImpl implements MerchantService {
         if (optional.isPresent()) {
             Merchant existedMerchant = optional.get();
 
+            existedMerchant.setName(merchant.getName());
+            existedMerchant.setAddress(merchant.getAddress());
+            existedMerchant.setPhoneNo(merchant.getPhoneNo());
             existedMerchant.setEmail(merchant.getEmail());
+            existedMerchant.setImageIds(merchant.getImageIds());
+            existedMerchant.setImageProfileId(merchant.getImageProfileId());
 
             merchantRepository.save(existedMerchant);
         }
