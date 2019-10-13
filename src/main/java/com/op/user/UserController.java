@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity update(@PathVariable String id, @RequestBody User user) {
+    public ResponseEntity updateById(@PathVariable String id, @RequestBody User user) {
         LOG.info("Call Update User: " + id);
         Optional<User> optional = userService.updateById(id, user);
         if (optional.isPresent()) {
@@ -72,7 +72,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity delete(@PathVariable ObjectId id) {
+    public ResponseEntity deleteById(@PathVariable ObjectId id) {
         Optional<User> optional = userService.deleteById(id);
         if (optional.isPresent()) {
             return new ResponseEntity(optional.get(), HttpStatus.OK);
