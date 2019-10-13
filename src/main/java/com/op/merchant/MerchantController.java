@@ -1,11 +1,16 @@
 package com.op.merchant;
 
 import com.op.constant.Api;
+import com.op.user.User;
+import com.op.user.UserController;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +18,8 @@ import java.util.Optional;
 @RequestMapping(Api.v1)
 @RestController
 public class MerchantController {
+    private static Log LOG = LogFactory.getLog(MerchantController.class);
 
-    @Autowired
-    private MerchantRepository merchantRepository;
     @Autowired
     private MerchantService merchantService;
 
@@ -30,23 +34,22 @@ public class MerchantController {
         return merchantService.findAll();
     }
 
-//    @PutMapping("/merchants/{id}")
-//    public Optional<Merchant> update(@PathVariable String id, @RequestBody Merchant merchant) {
-//        Optional<Merchant> optional = merchantService.findAll(id);
-//        if (optional.isPresent()) {
-//            Merchant existedMerchant = optional.get();
-//            existedMerchant.setEmail(merchant.getEmail());
-//            merchantRepository.save(existedMerchant);
-//        }
-//        return optional;
-//    }
+    @PutMapping("/merchant/{id}")
+    public ResponseEntity updateById(@PathVariable String id, @RequestBody Merchant merchant) {
+        LOG.info("Call Update Merchant: " + id);
+        Optional<Merchant> optional = merchantService.updateById(id, merchant);
+        if (optional.isPresent()) {
+            return new ResponseEntity(optional.get(), HttpStatus.OK);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
 
     @DeleteMapping("/merchants/{id}")
-    public List<Merchant> delete(@PathVariable ObjectId id) {
-        Optional<Merchant> optional = merchantRepository.findBy_id(id);
+    public ResponseEntity delete(@PathVariable String id) {
+        Optional<Merchant> optional = merchantService.findById(id);
         if (optional.isPresent()) {
-            merchantRepository.delete(optional.get());
+            return new ResponseEntity(optional.get(), HttpStatus.OK);
         }
-        return findAll();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 }
