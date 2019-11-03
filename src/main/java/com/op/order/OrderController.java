@@ -45,50 +45,50 @@ public class OrderController {
         return findall();
     }
 
-     public int calprice(int totalpage,int copy,String typeprint,String sizepaper){
-         String blackwhite,color,laser,photo,a1,a2,a3,a4;
-         blackwhite = "bw";
-         color = "color";
-         photo = "photo";
-         laser = "laser";
-         a1 = "a1";
-         a2 = "a2";
-         a3 = "a3";
-         a4 = "a4";
-         int price = 0;
-            if(typeprint.equals("bw")&&sizepaper.equals("a1")){
-                price = totalpage * copy * 1 * 60;
-            } else if(typeprint.equals("bw")&&sizepaper.equals("a2")){
-                price = totalpage * copy * 1 * 25;
-            } else if(typeprint.equals("bw")&&sizepaper.equals("a3")){
-                price = totalpage * copy * 1 * 30;
-            } else if(typeprint.equals("bw")&&sizepaper.equals("a4")){
-                price = totalpage * copy * 1 * 1;
-            } else if(typeprint.equals("color")&&sizepaper.equals("a1")){
-                price = totalpage * copy * 3 * 60;
-            } else if(typeprint.equals("color")&&sizepaper.equals("a2")){
-                price = totalpage * copy * 3 * 25;
-            } else if(typeprint.equals("color")&&sizepaper.equals("a3")){
-                price = totalpage * copy * 3 * 30;
-            } else if(typeprint.equals("color")&&sizepaper.equals("a4")){
-                price = totalpage * copy * 3 * 1;
-            } else if(typeprint.equals("photo")&&sizepaper.equals("a1")){
-                price = totalpage * copy * 10 * 60;
-            } else if(typeprint.equals("photo")&&sizepaper.equals("a2")){
-                price = totalpage * copy * 10 * 25;
-            } else if(typeprint.equals("photo")&&sizepaper.equals("a3")){
-                price = totalpage * copy * 10 * 30;
-            } else if(typeprint.equals("photo")&&sizepaper.equals("a4")){
-                price = totalpage * copy * 10 * 1;
-            } else if(typeprint.equals("laser")&&sizepaper.equals("a1")){
-                price = totalpage * copy * 5 * 60;
-            } else if(typeprint.equals("laser")&&sizepaper.equals("a2")){
-                price = totalpage * copy * 5 * 25;
-            } else if(typeprint.equals("laser")&&sizepaper.equals("a3")){
-                price = totalpage * copy * 5 * 30;
-            } else if(typeprint.equals("laser")&&sizepaper.equals("a4")){
-                price = totalpage * copy * 5 * 1;
-            }
-         return price;
-     }
+//     public int calprice(int totalpage,int copy,String typeprint,String sizepaper){
+//         String blackwhite,color,laser,photo,a1,a2,a3,a4;
+//         blackwhite = "bw";
+//         color = "color";
+//         photo = "photo";
+//         laser = "laser";
+//         a1 = "a1";
+//         a2 = "a2";
+//         a3 = "a3";
+//         a4 = "a4";
+//         int price = 0;
+//            if(typeprint.equals("bw")&&sizepaper.equals("a1")){
+//                price = totalpage * copy * 1 * 60;
+//            } else if(typeprint.equals("bw")&&sizepaper.equals("a2")){
+//                price = totalpage * copy * 1 * 25;
+//            } else if(typeprint.equals("bw")&&sizepaper.equals("a3")){
+//                price = totalpage * copy * 1 * 30;
+//            } else if(typeprint.equals("bw")&&sizepaper.equals("a4")){
+//                price = totalpage * copy * 1 * 1;
+//            } else if(typeprint.equals("color")&&sizepaper.equals("a1")){
+//                price = totalpage * copy * 3 * 60;
+//            } else if(typeprint.equals("color")&&sizepaper.equals("a2")){
+//                price = totalpage * copy * 3 * 25;
+//            } else if(typeprint.equals("color")&&sizepaper.equals("a3")){
+//                price = totalpage * copy * 3 * 30;
+//            } else if(typeprint.equals("color")&&sizepaper.equals("a4")){
+//                price = totalpage * copy * 3 * 1;
+//            } else if(typeprint.equals("photo")&&sizepaper.equals("a1")){
+//                price = totalpage * copy * 10 * 60;
+//            } else if(typeprint.equals("photo")&&sizepaper.equals("a2")){
+//                price = totalpage * copy * 10 * 25;
+//            } else if(typeprint.equals("photo")&&sizepaper.equals("a3")){
+//                price = totalpage * copy * 10 * 30;
+//            } else if(typeprint.equals("photo")&&sizepaper.equals("a4")){
+//                price = totalpage * copy * 10 * 1;
+//            } else if(typeprint.equals("laser")&&sizepaper.equals("a1")){
+//                price = totalpage * copy * 5 * 60;
+//            } else if(typeprint.equals("laser")&&sizepaper.equals("a2")){
+//                price = totalpage * copy * 5 * 25;
+//            } else if(typeprint.equals("laser")&&sizepaper.equals("a3")){
+//                price = totalpage * copy * 5 * 30;
+//            } else if(typeprint.equals("laser")&&sizepaper.equals("a4")){
+//                price = totalpage * copy * 5 * 1;
+//            }
+//         return price;
+//     }
 }
