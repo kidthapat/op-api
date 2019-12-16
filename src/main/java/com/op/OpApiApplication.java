@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 public class OpApiApplication {
 
     public static void main(String[] args) {
+        System.getProperty("java.home");
         SpringApplication.run(OpApiApplication.class, args);
     }
 }
