@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,6 +25,7 @@ public class MerchantController {
     @Autowired
     private MerchantService merchantService;
 
+    @PreAuthorize("hasAuthority('CREATE_MERCHANT')")
     @PostMapping("/merchants")
     public ResponseEntity create(@RequestBody Merchant merchant) {
         LOG.info("Call Create Merchant");
@@ -37,6 +39,7 @@ public class MerchantController {
         return ResponseEntity.ok(merchantService.findAll());
     }
 
+    @PreAuthorize("hasAuthority('FIND_MERCHANT')")
     @GetMapping("/merchants/{id}")
     public ResponseEntity findById(@PathVariable String id) {
         LOG.info("Call Get All Merchants");
@@ -47,6 +50,7 @@ public class MerchantController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_MERCHANT')")
     @PutMapping("/merchants/{id}")
     public ResponseEntity updateById(@PathVariable String id, @Valid @RequestBody Merchant merchant) {
         LOG.info("Call Update Merchant: " + id);
@@ -57,6 +61,7 @@ public class MerchantController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
+    @PreAuthorize("hasAuthority('DELETE_MERCHANT')")
     @DeleteMapping("/merchants/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         LOG.info("Call Delete Merchant: " + id);
