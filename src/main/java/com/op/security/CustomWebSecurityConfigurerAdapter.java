@@ -20,8 +20,9 @@ import javax.servlet.Filter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-    private String loginUrl = Api.v1 + "/login";
-    private String regiserUserUrl = Api.v1 + "/users";
+    private String login = Api.v1 + "/login";
+    private String regiserUser = Api.v1 + "/users";
+    private String findAllMerchants = Api.v1 + "/merchants";
 
     @Bean
     public UserDetailsService getUserDetailsService() {
@@ -43,13 +44,14 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, loginUrl, regiserUserUrl).permitAll()
+                .antMatchers(HttpMethod.POST, login, regiserUser).permitAll()
+                .antMatchers(HttpMethod.GET, findAllMerchants).permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic().authenticationEntryPoint(getBasicAuthenticationEntryPoint())
                 .and().sessionManagement().maximumSessions(1);
 
-        Filter filter = new CustomAbstractAuthenticationProcessingFilter(loginUrl, authenticationManager(), getApplicationContext());
+        Filter filter = new CustomAbstractAuthenticationProcessingFilter(login, authenticationManager(), getApplicationContext());
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
