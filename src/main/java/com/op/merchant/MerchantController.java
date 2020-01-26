@@ -26,12 +26,14 @@ public class MerchantController {
 
     @PostMapping("/merchants")
     public ResponseEntity create(@RequestBody Merchant merchant) {
+        LOG.info("Call Create Merchant");
         Merchant createdMerchant = merchantService.create(merchant);
         return new ResponseEntity(createdMerchant, HttpStatus.CREATED);
     }
 
     @GetMapping("/merchants")
     public List<Merchant> findAll() {
+        LOG.info("Call Get All Merchants");
         return merchantService.findAll();
     }
 
@@ -47,6 +49,7 @@ public class MerchantController {
 
     @DeleteMapping("/merchants/{id}")
     public ResponseEntity delete(@PathVariable String id) {
+        LOG.info("Call Delete Merchant: " + id);
         Optional<Merchant> optional = merchantService.findById(id);
         if (optional.isPresent()) {
             return new ResponseEntity(optional.get(), HttpStatus.OK);
