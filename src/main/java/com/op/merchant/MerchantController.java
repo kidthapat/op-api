@@ -32,9 +32,19 @@ public class MerchantController {
     }
 
     @GetMapping("/merchants")
-    public List<Merchant> findAll() {
+    public ResponseEntity findAll() {
         LOG.info("Call Get All Merchants");
-        return merchantService.findAll();
+        return ResponseEntity.ok(merchantService.findAll());
+    }
+
+    @GetMapping("/merchants/{id}")
+    public ResponseEntity findById(@PathVariable String id) {
+        LOG.info("Call Get All Merchants");
+        Optional<Merchant> optional = merchantService.findById(id);
+        if (optional.isPresent()) {
+            return new ResponseEntity(optional.get(), HttpStatus.OK);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/merchants/{id}")
@@ -50,10 +60,10 @@ public class MerchantController {
     @DeleteMapping("/merchants/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         LOG.info("Call Delete Merchant: " + id);
-        Optional<Merchant> optional = merchantService.findById(id);
-        if (optional.isPresent()) {
-            return new ResponseEntity(optional.get(), HttpStatus.OK);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//        Optional<Merchant> optional = merchantService.findById(id);
+//        if (optional.isPresent()) {
+//            return new ResponseEntity(optional.get(), HttpStatus.OK);
+//        }
+        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
     }
 }
