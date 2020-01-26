@@ -23,6 +23,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     private String login = Api.v1 + "/login";
     private String regiserUser = Api.v1 + "/users";
     private String findAllMerchants = Api.v1 + "/merchants";
+    private String findFile = Api.v1 + "/files/{name:.+}";
 
     @Bean
     public UserDetailsService getUserDetailsService() {
@@ -45,7 +46,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, login, regiserUser).permitAll()
-                .antMatchers(HttpMethod.GET, findAllMerchants).permitAll()
+                .antMatchers(HttpMethod.GET, findAllMerchants, findFile).permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic().authenticationEntryPoint(getBasicAuthenticationEntryPoint())

@@ -8,10 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /*
 ref:
@@ -27,21 +32,33 @@ public class FileController {
     private StorageService storageService;
 
     @PreAuthorize("hasAuthority('UPLOAD_FILE')")
-    @PostMapping("/file/upload")
-    public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) {
-        LOG.info("Call upload file: " + file.getOriginalFilename());
+    @PostMapping("/files")
+    public ResponseEntity upload(@RequestParam("file") MultipartFile file) {
+        LOG.info("Call Upload file: " + file.getOriginalFilename());
         FileResponse response = storageService.store(file);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @GetMapping("/file/download/{name:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String name) {
-        LOG.info("Call download file: " + name);
+    @GetMapping("/files/download/{name:.+}")
+    public ResponseEntity<Resource> downloadByName(@PathVariable String name) {
+        LOG.info("Call Download File: " + name);
         Resource resource = storageService.loadAsResource(name);
 
         return ResponseEntity.ok()
                 .header(
                         HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
+    @GetMapping("/files/{name:.+}")
+    public ResponseEntity findByName(@PathVariable String name) throws IOException {
+        LOG.info("Call Get File: " + name);
+        Resource resource = storageService.loadAsResource(name);
+        Path path = resource.getFile().toPath();
+        String mediaType = Files.probeContentType(path);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(mediaType))
                 .body(resource);
     }
 }
