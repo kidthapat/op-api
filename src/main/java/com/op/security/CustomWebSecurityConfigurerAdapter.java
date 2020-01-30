@@ -20,6 +20,7 @@ import javax.servlet.Filter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+    private String home = "/";
     private String login = Api.v1 + "/login";
     private String regiserUser = Api.v1 + "/users";
     private String findAllMerchants = Api.v1 + "/merchants";
@@ -46,7 +47,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, login, regiserUser).permitAll()
-                .antMatchers(HttpMethod.GET, findAllMerchants, findFile).permitAll()
+                .antMatchers(HttpMethod.GET, home, findAllMerchants, findFile).permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic().authenticationEntryPoint(getBasicAuthenticationEntryPoint())
