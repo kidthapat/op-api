@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin
 @RequestMapping(Api.v1)
 @RestController()
 public class UserController {
