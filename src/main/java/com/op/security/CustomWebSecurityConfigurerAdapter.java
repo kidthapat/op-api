@@ -58,7 +58,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+//                .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, login, regiserUser).permitAll()
