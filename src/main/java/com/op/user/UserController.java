@@ -15,10 +15,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+@io.swagger.annotations.Api("Users")
 @RequestMapping(Api.v1)
 @RestController()
 public class UserController {
-    private static Log LOG = LogFactory.getLog(UserController.class);
+    private final static Log LOG = LogFactory.getLog(UserController.class);
 
     @Autowired
     private UserService userService;
