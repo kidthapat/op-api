@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findById(String id) {
         Optional<User> optional = userRepository.findById(id);
         if(optional.isPresent()) {
-            optional.get().setPassword(null); // secure a password
+            optional.get().setPassword(""); // secure a password
         }
         return optional;
     }
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByEmail(String email) {
         Optional<User> optional = userRepository.findByEmail(email);
         if(optional.isPresent()) {
-            optional.get().setPassword(null); // secure a password
+            optional.get().setPassword(""); // secure a password
         }
         return optional;
     }
