@@ -18,19 +18,19 @@ public class User {
     @Email
     @Length(min = 1, max = 100)
     @NotEmpty
-    private String email;
+    private String email = "";
 
     @Length(min = 1, max = 100)
-    private String password;
+    private String password = "";
 
     @NotEmpty
-    private String firstName;
+    private String firstName = "";
 
     @NotEmpty
-    private String lastName;
+    private String lastName = "";
 
     @NotEmpty
-    private String phoneNo;
+    private String phoneNo = "";
 
     @NotEmpty
     @DBRef
